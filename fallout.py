@@ -40,7 +40,7 @@ hrPasswords = ['reticulate', 'arbicolase', 'seticolair', 'ratelicare',
 'vrabilbase', 'resacubate', 'rehashfate', 'fatarketea', 'ubekgadare', 
 'subloglare']
 
-mainframePasswords = ['worshipfully', 'whimsicality', 'wherethrough', 
+mfPasswords = ['worshipfully', 'whimsicality', 'wherethrough', 
 'watermanship', 'watchfulness', 'weatherboard', 'wattenscheid', 'weatherglass',
 'westernizing', 'wretchedness', 'whoremastery', 'westernising', 'wollastonite',
 'wordlessness', 'wirelessness']
@@ -48,17 +48,17 @@ mainframePasswords = ['worshipfully', 'whimsicality', 'wherethrough',
 # set correct passwords
 billingSecret = billingPasswords[3]
 hrSecret = hrPasswords[0]
-mainframeSecret = mainframePasswords[9]
+mfSecret = mfPasswords[9]
 
 # set number of allowed tries
 billingGuesses = 5
 hrGuesses = 4
-mainframeGuesses = 3
+mfGuesses = 3
 
 # checks how many characters are correct
-def check_guess(levelGuess, levelSecret):
+def check_guess(userGuess, levelSecret):
     correct = 0
-    for g, s in zip(levelGuess, levelSecret):
+    for g, s in zip(userGuess, levelSecret):
         if g == s:
             correct += 1
     return correct
@@ -68,17 +68,17 @@ def start_auth(guesses, levelSecret):
     guessCount = 0
     while guessCount < guesses:
         print('\nPassword ' + '(Attempt ' + str(guessCount+1) + '/' + str(guesses) + ')' + ':')
-        levelGuess = raw_input('> ')
+        userGuess = raw_input('> ')
 
-        if len(levelGuess) < len(levelSecret) or len(levelGuess) > len(levelSecret):
+        if len(userGuess) < len(levelSecret) or len(userGuess) > len(levelSecret):
             print('You must enter ' + str(len(levelSecret)) + ' characters.')
             break
     
-        if levelGuess == levelSecret:
+        if userGuess == levelSecret:
             print('System Unlocked. Do thy worst.')
             break
     
-        result = check_guess(levelGuess, levelSecret)
+        result = check_guess(userGuess, levelSecret)
         print(str(result) + ' correct ' + str(len(levelSecret) - result) + ' incorrect')
         guessCount += 1
     
@@ -104,8 +104,8 @@ def set_difficulty():
         print_passwords(hrPasswords)
         start_auth(hrGuesses, hrSecret)
     elif systemLevel == '3':
-        print_passwords(mainframePasswords)
-        start_auth(mainframeGuesses, mainframeSecret)
+        print_passwords(mfPasswords)
+        start_auth(mfGuesses, mfSecret)
     else:
         print('Not a valid choice, enter 1, 2 or 3')
 
